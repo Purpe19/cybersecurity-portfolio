@@ -1,1 +1,53 @@
+Common Ports that are attacked on Brute force are 
+-22 (SSH)
+-21(FTP)
+-23(Telnet)
+-3389(RDP)
+-3306(MYSQL)
+-5432(Postgresql)
+-5900(VNC)
+-80/443(Web login forms) 
+
+Step 1. 
+Ping with the Endpoint Ip adrress if everything is connected 
+
+step 2 
+Check what ports are open 
+nmap Ip address (Only shows the 1000 ports that are open) 
+nmap -p- Ip address (scans all 65000 ports )
+nmap -p 135,139,445,3389,5985,80,443, 192.168.95.131 (This will scan particular ports that are stated here with Endpoint IP at last) 
+
+Step 3 
+Install BruteForce tool It can be 
+1.Hydra (supports SSH, FTP, RDP, HTTP Login Forms, SMB)  
+2. Medusa 
+3. CrackMapExec (Very common in Active Directory Attacks ) 
+4. Ncrack(can brute force RDP.SSH,FTP, SMB)
+5.Patator(Supports HTTP, SSH, FTP, RDP)
+
+Attack cmd for each tools 
+Crackmap Exec - first u need to create a nano passwords.txt and type several passwords or passwords that u want to guess and run the below command 
+crackmapexec smb 192.168.95.131 -u Administrator -p passwords.txt 
+Now go to the SPlunk Enterprise and Search this SPL 
+index=wineventlog EventCode=4625
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
