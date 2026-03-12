@@ -1,0 +1,102 @@
+Attackers usually follow a Kill Chain : 
+RECON---- Initial Access----Persistence ----Lateral movement ---Data Theft 
+1. Reconnaissance(Finding Targets) 
+-What systems exist in this Network?
+-Which IP addresses are alive?
+-Which ports are open?
+- What services are running?
+- Which Software versions are running?
+- Are there any Vulnerabilities?
+- Are there public facing servers?
+- Does the company expose VPN or RDP?
+
+
+2.Initial Access 
+- Can i guess the passwords?
+- Are employees vulnerable to Phising? 
+-Can i exploit a vulnerability?
+-Can i access exposed RDP or SSH?
+-IS MFA enabled?
+-can i steal Credentials?
+Common attacks here are Phising, Brute force, password spraying, vulnerability exploation
+
+3.Privilege Escalation 
+Once inside attacker asks:
+-Am i a normal user or admin?
+-Can i escalate privilege?
+-Are there misconfigured permissions?
+- Can i dump passwords?
+tools used here are MImikatz, privilege escalation exploits
+
+4. Persistence 
+Attacker asks:
+-If i get kicked out how do i come back? 
+-Can i create a hidden account?
+-can i install malware?
+-Can i schedule tasks?
+example persistancee method 
+backdoor accounts
+registry modifications 
+scheduled tasks
+
+5.Lateral Movement 
+attacker asks 
+-what other machies can i reach?
+-Can I access file servers?
+-Can i access domain controllers?
+-can i move to another machine?
+-Are there shared credentials?
+common tools used PsExec, WMI, SMB
+
+6. Data Discovery 
+attacker asks:
+-where is sensitive data stored?
+-are there financial records?
+-are there databases?
+-where are backups?
+
+7.Data Exfiltration
+attacker asks:
+-Can i move data out without being detected?
+-can i use encrypted traffic?
+-can i upload to cloud storage?
+
+QUESTIONS A SOC ANALYST ASKS
+
+SOC analysts follow an incident investigation mindset
+when an alert appears analyst ask these questions
+1.Alert Validation
+-is this alert real?
+-Could this be a false positive?
+-what detection rule triggered the alert?
+-what attack technique might this be?
+example, Multiple failed logins, brute force
+
+3.when did it happen?
+-what time did the activity start?
+-how long did it last?
+-did it occur outside bussiness hours?
+
+4.who is involved?
+-which user account is involved?
+-is the account privileged?
+-is this account normally active?
+
+5.where did it come from?
+-what source IP initiated the activity?
+-is it internal or external?
+-is the ip known malicious?
+
+6.what system was targeted?
+-which host was targeted?
+-is it a critical server?
+-is it a domain controller?
+
+7.DID the Attack succeed?
+-was access actually gained?
+-were there successful logins?
+-was a new account created?
+
+8.What happened after access?
+SOC analysts ask:
+Were new processes executed?
