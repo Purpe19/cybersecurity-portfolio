@@ -100,3 +100,48 @@ example, Multiple failed logins, brute force
 8.What happened after access?
 SOC analysts ask:
 Were new processes executed?
+-Were admin privileges granted?  
+-was there lateral movement? 
+example logs - process creation, new service installed , remote command executed. 
+
+9. Is the Attacker still Allive ?
+- Is there ongoing suspicious activity? 
+Are connections Still active ? 
+Are there repeated attempts? 
+
+10. What is the Scope ? 
+SOC tries to understand the impact 
+Questions ;
+-Are other systems affected? 
+- Are other accounts compromised?
+-Did Attacker spread? 
+
+11.Was Data stolen? 
+SOC checks 
+-Large downloads
+-file transfers
+-cloud uploads 
+
+12. Root Cause 
+Soc asks 
+-How did attacker get in ? 
+Was is phising ? 
+-Was it a weak password? 
+-Was it vulnerability? 
+
+13. What needs to be contained ? 
+SOc decides 
+- Disable account . 
+-Block IP 
+- Isolate machine 
+-Reset Passwords 
+
+
+REAL SOC INVESTIGATION FLOW 
+SOC analysty often follow this flow: 
+1. Validate alert 
+2.Identify affected account 
+3. Investigate logs 
+4. Determine Scope 
+5. Identify attacker activity 
+6. Contain Incident 
