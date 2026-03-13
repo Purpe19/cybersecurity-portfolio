@@ -1,12 +1,30 @@
+NOTE # WHAT SOC ANALYSTS ACTUALLY Look for 
+SOC teams dont care which tool the attacker used. 
+They watch for patterns like : 
+
+Indicator                         Meaning 
+Many failed login attempts        possible brute force 
+Same IP trying many passwords      Credential attack 
+Multiple accounts targeted        password spraying 
+Login success after failures      Account Compromise 
+
+LOGS SOC ANALYST LOOK AT 
+The most important SOC skill is LOG investigation 
+for windows environments the key events are 
+
+4625 - Failed login attempt 
+4624 - Successful login 
+4672 - Admin privileges assigned
+
 Common Ports that are attacked on Brute force are 
--22 (SSH)
--21(FTP)
--23(Telnet)
--3389(RDP)
--3306(MYSQL)
--5432(Postgresql)
--5900(VNC)
--80/443(Web login forms) 
+-22 (SSH) - secure remote shell (Linux Servers)
+-21(FTP) - File Transfer Service (FTP server Logs) 
+-23(Telnet) -Old remote login protocol (Telnet server Logs) 
+-3389(RDP) - Windows Remote Desktop (Windows login Events)
+-3306(MYSQL) - Database Server(My SQL authentication logs) 
+ -5432(Postgresql) - Database server (PostgreSQL logs) 
+-5900(VNC) -Remote desktop service (VNC Logs)
+-80/443(Web login forms) - Web servers (Web server access logs) 
 
 Step 1. 
 Ping with the Endpoint Ip adrress if everything is connected 
@@ -26,10 +44,208 @@ Install BruteForce tool It can be
 5.Patator(Supports HTTP, SSH, FTP, RDP)
 
 Attack cmd for each tools 
-Crackmap Exec - first u need to create a nano passwords.txt and type several passwords or passwords that u want to guess and run the below command 
+(CRACKMAPEXEC TOOLS)
+3. Crackmap Exec - first u need to create a nano passwords.txt and type several passwords or passwords that u want to guess and run the below command 
 crackmapexec smb 192.168.95.131 -u Administrator -p passwords.txt 
 Now go to the SPlunk Enterprise and Search this SPL 
 index=wineventlog EventCode=4625
+
+1.(HYDRA) Bruteforce Attack 
+Even fro Hydra create the nano passowrds.txt 
+hydra -l administrator -P passwords.txt smb://192.168.95.131
+
+2.(Medusa)
+Make sure the medusa is installed if not 
+sudo apt install medusa 
+create passwords list i:e nano passwords.txt
+medusa -h 192.168.95.131 -u administrator -P passwords.txt -M smbnt 
+Meaning :
+-h-- target host 
+-u---username 
+-P---password list 
+-M smbnt ---SMB module 
+
+4.Ncrack
+ncrack --version 
+install ncrack if not installed 
+sudo apt install ncrack 
+ncrack -p 445 -u administrator -p passwords.txt 192.168.95.131
+meaning i:e 
+-p 445---SMB port 
+-u---username 
+-P----password List 
+
+5. Patator(more advanced ) 
+install - sudo apt install patator 
+patator smb_login host=192.168.95.131 user=administrator password=FILE0 0=passwords.txt
+meaning i:e 
+host -- target machine 
+user -- username 
+File0 = password list 
+
+
+NOTE# A brute force attack involves repeated authentication attempts to guess a password. In a windows 
+machine i would look for Event ID 4625 for failed logins and check the source IP, targeted account and 
+frequency of attempts. I would determine whether a successful login occured afterward and then 
+investigate the scope of the activity to see if the attacker moved to other Systems.
+
+#Interview Questions
+What is a brute-force attack?
+
+Good answer
+
+A brute-force attack is when an attacker repeatedly tries multiple password combinations to gain unauthorized access to an account or service.
+
+Example pattern:
+
+login attempt → fail
+login attempt → fail
+login attempt → fail
+login attempt → success
+
+SOC analysts detect this by monitoring repeated authentication failures.
+
+2️⃣ How would you detect a brute-force attack?
+
+SOC analysts look for patterns like:
+
+• many failed login attempts
+• same IP trying multiple passwords
+• repeated attempts in short time
+• successful login after many failures
+
+Example detection query in Splunk:
+
+index=* EventCode=4625
+| stats count by Source_Network_Address Account_Name
+3️⃣ Which logs would you investigate for brute-force activity?
+
+For Windows systems:
+
+Event ID	Meaning
+4625	Failed login attempt
+4624	Successful login
+4672	Admin privileges assigned
+
+SOC analysts look for many 4625 events from the same IP.
+
+4️⃣ What is the difference between brute force and password spraying?
+Attack Type	Behavior
+Brute force	many passwords against one account
+Password spraying	one password against many accounts
+
+Example:
+
+Brute force:
+
+admin → password1
+admin → password2
+admin → password3
+
+Password spraying:
+
+password123 → admin
+password123 → john
+password123 → guest
+5️⃣ What is credential stuffing?
+
+Credential stuffing is when attackers use stolen username/password pairs from previous data breaches to attempt login on other services.
+
+Example:
+
+email + password from breached database
+
+SOC detection:
+
+• many login attempts across accounts
+• login from unusual locations
+
+6️⃣ What indicators suggest a brute-force attack?
+
+Indicators include:
+
+• high number of login failures
+• login attempts from unfamiliar IP addresses
+• multiple attempts within short time
+• authentication attempts across many systems
+
+7️⃣ What actions should a SOC analyst take after detecting brute force?
+
+Typical response steps:
+
+lock or disable the affected account
+
+block the attacking IP address
+
+enforce password reset
+
+enable MFA if not enabled
+
+investigate further activity
+
+8️⃣ How can organizations prevent brute-force attacks?
+
+Common security controls:
+
+• multi-factor authentication (MFA)
+• account lockout policies
+• strong password policies
+• rate limiting login attempts
+• monitoring authentication logs
+
+9️⃣ What MITRE ATT&CK technique represents brute force?
+
+Brute force is mapped as:
+
+T1110 – Brute Force
+
+SOC teams often map alerts to MITRE techniques.
+
+🔟 What would you investigate after a successful brute-force login?
+
+SOC analysts check:
+
+• what actions the user performed after login
+• whether new accounts were created
+• if sensitive files were accessed
+• if lateral movement occurred
+
+This determines the impact of the compromise.
+
+How Your Lab Helps With These Questions
+
+Your lab already simulated:
+
+• brute force with CrackMapExec
+• Hydra attacks
+• Medusa attacks
+• Ncrack attacks
+• Patator attacks
+
+In real SOC work, analysts don’t care about the tool — they look at authentication patterns in logs, which you are already practicing in Splunk.
+
+Next Attack to Practice (Very Important)
+
+The next attack you should simulate is:
+
+Password Spraying
+
+Why?
+
+Because it is one of the most common attacks in real corporate environments, and SOC analysts must distinguish it from brute force.
+
+Example pattern:
+
+password123 → admin
+password123 → john
+password123 → guest
+
+This looks very different in Splunk logs.
+
+
+
+
+
 
 
 
