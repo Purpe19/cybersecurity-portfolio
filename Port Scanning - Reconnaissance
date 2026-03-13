@@ -1,1 +1,113 @@
+Port Scanning/reconnaissance is usually the first step attackers perform before brute 
+force or exploitation. 
+In SOC lab I will have to simulate scanning from Kali and then look for evidence of that 
+behavior in logs inside Splunk Enterprise 
+
+Goal: 
+Port scan ----- network activity ----Investigate in Splunk 
+
+What port Scanning Means ?
+Attackers first try to discover what services are available on a target.
+They ask 
+which hosts are alive? 
+which ports are open ? 
+What services run on those ports ? 
+Are there Vulnerabilities? 
+
+So here in My lab setup what i will do is 
+Scan ----find open ports----Choose attack method 
+
+How ? 
+Basic scan with Nmap 
+nmap 192.168.95.131
+This will scan the top 1000 common ports 
+
+#To scan all the ports 
+nmap -p- 192.168.95.131
+This scan 1-65535 ports
+
+#Aggressive Scan (Real Attacker Behavior) 
+Attacker often run 
+nmap -sS -sV -0 192.168.95.131 
+meaning 
+-sS ---Stealth SYN scan 
+-sV ---- detect service versions 
+-O ----Detect operating system 
+
+#Fast Network Scan 
+nmap 192.168.95.0/24
+This finds all active machines in the network. 
+
+# How Soc Analyst Detect port scanning 
+Soc teams look for 
+- one IP connecting to many ports 
+-rapid connection attempts 
+unusual scanning patterns 
+eg: same IP ---- 20+ ports within seconds 
+
+Investigating in Splunk
+
+If network logs exist, analysts search for many connections.
+
+Example search concept:
+
+index=* 
+| stats count by src_ip dest_port
+
+Or detecting scanning behavior:
+
+index=* 
+| stats dc(dest_port) as ports_scanned by src_ip
+| where ports_scanned > 10
+
+Meaning:
+
+one IP scanning many ports
+9️⃣ MITRE ATT&CK Mapping
+
+Port scanning corresponds to:
+
+T1046 – Network Service Scanning
+
+SOC teams use this framework to categorize reconnaissance activity.
+
+🔟 SOC Investigation Questions
+
+When analysts see a scan, they ask:
+
+Which IP performed the scan?
+
+Which ports were targeted?
+
+How many ports were scanned?
+
+Was the scan internal or external?
+
+Did the attacker attempt further attacks after scanning?
+
+Typical Attack Chain
+
+Most attacks follow this order:
+
+Reconnaissance
+      ↓
+Port scanning
+      ↓
+Brute force / exploitation
+      ↓
+Privilege escalation
+      ↓
+Lateral movement
+
+NOTE # NEXT POWERFUL SOC LAB STEP 
+After scanning attackers usually perform service enumeration to gather more information. 
+eg: SMB enumaration 
+user discovery 
+share discovery 
+That produces very Interesting logs for SOC analysts to investigate 
+Note# When an attacker finds SMB port 445 open they usually ask 
+1.Can i learn usernames?
+2.Can i see shared folders?
+3. Can i learn useful information about the windoes machine or domain 
+That process is called SMB enumeration. 
 
