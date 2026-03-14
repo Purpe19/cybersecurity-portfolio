@@ -1,3 +1,4 @@
+RDP,SMB - ---- EVENT 4625/4624
 NOTE # WHAT SOC ANALYSTS ACTUALLY Look for 
 SOC teams dont care which tool the attacker used. 
 They watch for patterns like : 
