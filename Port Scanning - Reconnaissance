@@ -1,3 +1,4 @@
+EVENT 5152/5156
 Port Scanning/reconnaissance is usually the first step attackers perform before brute 
 force or exploitation. 
 In SOC lab I will have to simulate scanning from Kali and then look for evidence of that 
