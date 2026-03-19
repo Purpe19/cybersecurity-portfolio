@@ -1,0 +1,76 @@
+1. Initial Access – How attackers get in
+Phishing – Emails with malicious links or attachments (T1566)
+
+Brute Force / Password Spraying – Guessing passwords (T1110)
+
+Exploit Public-Facing Application – Hacking web apps (T1190) – SQL Injection belongs here
+
+Drive‑by Compromise – Malicious website exploits browser (T1189)
+
+2. Execution – How they run their code
+PowerShell – Running malicious scripts (T1059.001)
+
+Command and Scripting Interpreter – Using cmd, bash, etc. (T1059)
+
+User Execution – Tricking user into running a file (T1204) – Malicious macros
+
+Scheduled Task/Job – Creating tasks to run code (T1053)
+
+3. Persistence – How they stay in
+Registry Run Keys – Adding startup entries (T1547.001)
+
+Scheduled Tasks – Re‑running malware (T1053.005)
+
+Create Account – Adding a backdoor user (T1136)
+
+4. Privilege Escalation – How they get more rights
+Exploitation for Privilege Escalation – Using a bug (T1068)
+
+Access Token Manipulation – Impersonating tokens (T1134)
+
+UAC Bypass – Bypassing Windows User Account Control (T1548.002)
+
+5. Defense Evasion – How they hide
+Disable Security Tools – Turning off antivirus (T1562.001)
+
+Process Injection – Hiding code in legitimate processes (T1055)
+
+Obfuscated Files or Information – Encoded PowerShell, packed malware (T1027)
+
+Clear Windows Event Logs – wevtutil cl (T1070.001)
+
+6. Credential Access – How they steal passwords
+Credential Dumping – Mimikatz, LSASS access (T1003)
+
+Keylogging – Recording keystrokes (T1056.001)
+
+Network Sniffing – Capturing plaintext passwords (T1040)
+
+7. Lateral Movement – How they spread
+Pass‑the‑Hash – Using password hashes to authenticate (T1550.002)
+
+Remote Desktop Protocol (RDP) – Brute‑force or legitimate use (T1021.001)
+
+SMB/Windows Admin Shares – Moving via \admin$ (T1021.002)
+
+8. Command and Control (C2) – How they talk to home base
+Beaconing – Regular check‑ins to external IP (TA0011)
+
+DNS Tunneling – Hiding data in DNS queries (T1572)
+
+Web Protocols – HTTP/HTTPS C2 (T1071.001)
+
+9. Exfiltration – How they steal data
+Data Compression – Zipping before sending (T1560)
+
+Exfiltration Over C2 Channel – Stealing via the command channel (T1041)
+
+Automated Exfiltration – Tools like rclone (T1020)
+
+10. Impact – The final damage
+Ransomware – Encrypting files (T1486)
+
+Data Destruction – Deleting or corrupting data (T1485)
+
+Denial of Service (DoS) – Flooding services (T1498)
+
