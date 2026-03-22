@@ -1,1 +1,10 @@
-
+QUESTIONS
+1. What Happened?
+2. CHECK the Stats 
+3. How many Failed Login Attempts were captured?
+4.Who did it ? and When Did it Happen? 
+5. Create a Table to display the Timestamp, Source IP address, and Source Port for Each failed login Event.
+6. Who is targeted?
+what logon type?
+7. How many times did it happen?
+8. Identify source Ip, Domain and targeted account.
