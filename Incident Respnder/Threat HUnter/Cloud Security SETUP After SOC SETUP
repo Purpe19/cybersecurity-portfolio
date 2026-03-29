@@ -1,0 +1,41 @@
+In one simple sentence
+In your SOC lab, you learned:
+
+attack my own machine → collect logs → detect
+
+In this cloud lab, you will learn:
+
+build cloud system → attack it safely → see AWS logs/alerts → fix the design so it is harder to attack
+
+That is why we are building it. EC2 gives you the server, IAM controls who can do what, CloudTrail records activity, GuardDuty looks for suspicious behavior, and Security Groups act like the firewall. 
+AWS Documentation
++3
+AWS Documentation
++3
+AWS Documentation
++3
+
+How the dots connect
+Use this mental picture:
+
+EC2 = your cloud computer/server. 
+AWS Documentation
+
+Security Group = door lock / firewall for that server.
+
+IAM = who gets the keys and what they are allowed to do. 
+AWS Documentation
+
+CloudTrail = activity camera / audit trail for AWS actions like sign-ins and API calls. AWS says it records actions taken in the console, CLI, SDKs, and APIs. 
+AWS Documentation
++1
+
+GuardDuty = security guard that watches AWS data sources and raises findings for suspicious or malicious activity. 
+AWS Documentation
++1
+
+So the flow is:
+
+You build EC2 → protect it with Security Groups + IAM → generate activity/attacks → CloudTrail records it → GuardDuty flags suspicious behavior → you harden the setup
+
+That is the cloud version of your SOC workflow. 
